@@ -12,16 +12,22 @@ struct HomeView: View {
     
     @AppStorage("isLoggedIn") var isLoggedIn = true
     @State private var uid: String? = Auth.auth().currentUser?.uid
+    @State private var user: String? = Auth.auth().currentUser?.email
     
     var body: some View {
-        Text("Home View")
-        Button("계정 탈퇴") {
-            deleteAccount()
-        }
-        
-        if let uid = uid {
-            Text("사용자 UID: \(uid)")
-        }
+        var userNickname = String((user?.split(separator: "@").first)!)
+        VStack {
+            Text("Home View")
+            Text("환영합니다 \(userNickname)")
+            Button("계정 탈퇴") {
+                deleteAccount()
+            }
+            
+            if let uid = uid {
+                Text("사용자 UID: \(uid)")
+            }
+            
+        } //Vstack
     }
     
     func deleteAccount() {
