@@ -12,7 +12,7 @@ struct SignUpView: View {
     
     @State private var nickname: String = ""
     @State private var errorMessage: String = ""
-    @AppStorage("isLoggedIn") var isLoggedIn = false
+    @State private var isLoggedIn = false
     
     var body: some View {
         VStack {
@@ -23,6 +23,11 @@ struct SignUpView: View {
                 signUp()
             }
         }
+        .onChange(of: isLoggedIn, perform: { value in
+            if value {
+                UserDefaults.standard.set(true, forKey: "isLoggedIn")
+            }
+        })
     }
     
     func signUp() {
@@ -44,6 +49,7 @@ struct SignUpView: View {
                 //로그인 성공
                 isLoggedIn = true
                 print("로그인 성공")
+                
             }
         }
     }
