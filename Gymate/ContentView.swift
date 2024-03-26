@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MainView.swift
 //  Gymate
 //
 //  Created by Han on 3/26/24.
@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @AppStorage("isLoggedIn") private var isLoggedIn = false
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if isLoggedIn {
+            HomeView()
+        } else {
+            SignUpView()
         }
-        .padding()
     }
 }
 
