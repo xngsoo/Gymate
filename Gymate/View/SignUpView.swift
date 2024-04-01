@@ -39,6 +39,21 @@ struct SignUpView: View {
                 // 회원가입 성공
                 errorMessage = ""
                 isLoggedIn = true
+                
+                //MARK: firestore User 컬렉션에 사용자 추가 함수
+                if let uid = Auth.auth().currentUser?.uid {
+                    let db = Firestore.firestore()
+                    let userRef = db.collection("User").document(uid)
+                    
+                    // 사용자 document 추가
+                    userRef.setData(["uid": uid, "nickname": nickname]) { error in
+                        if let error = error {
+                            print("Error adding Firestore: \(error.localizedDescription)")
+                        } else {
+                            print("User added to Firestore with UID: \(uid)")
+                        }
+                    }
+                }
                 print("회원가입 성공")
             }
         }
@@ -51,6 +66,23 @@ struct SignUpView: View {
                 print("로그인 성공")
                 
             }
+        }
+        
+        //Firebase uid생성시 firestore User 컬렉션에 도큐먼트 생성
+        if let uid = Auth.auth().currentUser?.uid {
+            let db = Firestore.firestore()
+            let userRef = db.collection("User").document(uid)
+            
+            // 기존 사용자 document 업데이트 또는 추가
+            userRef.setData(["uid": uid], merge: true) { error in
+                if let error = error {
+                    print("Error adding document: \(error.localizedDescription)")
+                } else {
+                    print("Document added to User Collection with UID: \(uid)")
+                }
+            }
+        } else {
+            print("User not authenticated.")
         }
     }
 }

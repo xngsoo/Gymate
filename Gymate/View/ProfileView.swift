@@ -11,6 +11,8 @@ import Firebase
 struct ProfileView: View {
     var body: some View {
         VStack {
+            
+            //MARK: firebase에 등록된 계정탈퇴
             Button {
                 deleteAccount()
             } label: {
@@ -35,6 +37,23 @@ struct ProfileView: View {
                     UserDefaults.standard.set(false, forKey: "isLoggedIn")
                     print("계정 탈퇴 성공")
                 }
+            }
+            
+            //MARK: - 계정 탈퇴 시 firestore에서 uid에 해당하는 document삭제
+            if let uid = Auth.auth().currentUser?.uid {
+                let db = Firestore.firestore()
+                let userRef = db.collection("User").document(uid)
+                
+                // 문서 삭제
+                userRef.delete { error in
+                    if let error = error {
+                        print("Error deleting document: \(error.localizedDescription)")
+                    } else {
+                        print("Document deleted successfully")
+                    }
+                }
+            } else {
+                print("User not authenticated.")
             }
         }
     }
