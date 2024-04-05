@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct TodayWorkOut {
-    var date: Date
+struct TodayWorkOut: Identifiable {
+    
+    let id = UUID()
     var workOuts: [WorkOut]
-    var startTime: Date
-    var endTime: Date
+    //var startTime: Date
+    //var endTime: Date
 }

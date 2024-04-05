@@ -7,7 +7,10 @@
 
 import Foundation
 
-struct WorkOut {
-    var name: String
-    var runningTime: Date
+struct WorkOut: Identifiable {
+    var id = UUID()
+    var workoutName: String
+    var repsPerSet: Int
+    var totalSet: Int
+    //var runningTime: Date
 }

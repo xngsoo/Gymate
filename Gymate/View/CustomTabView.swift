@@ -58,7 +58,8 @@ struct CustomTabView: View {
                 .offset(y: -32)
             }
             .sheet(isPresented: $isShowAddTodayWorkSheet) {
-                AddTodayWorkView()
+                AddTodayWorkoutView()
+                    .interactiveDismissDisabled()
             }
             .buttonStyle(TabButtonStyle())
             Spacer()

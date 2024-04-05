@@ -9,6 +9,9 @@ import SwiftUI
 import Firebase
 
 struct ProfileView: View {
+    
+    @Binding var selectedTab: Tab
+    
     var body: some View {
         VStack {
             
@@ -56,11 +59,16 @@ struct ProfileView: View {
                 print("User not authenticated.")
             }
         }
+        // 계정 탈퇴 후 다시 로그인할 경우 default view를  homeView로 지정
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+            // 탈퇴 완료 전 homeView가 보이는 걸 막기위해 delay 설정
+            selectedTab = .home
+        }
     }
 }
 
 
 
-#Preview {
-    ProfileView()
-}
+//#Preview {
+//    ProfileView()
+//}

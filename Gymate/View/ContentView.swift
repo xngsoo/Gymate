@@ -24,7 +24,7 @@ struct TabButtonStyle: ButtonStyle {
 struct ContentView: View {
     
     @AppStorage("isLoggedIn") private var isLoggedIn = false
-    @State private var selectedTab: Tab = .home
+    @State var selectedTab: Tab = .home
     @State private var isShowAddTodayWorkSheet: Bool = false
     
     var body: some View {
@@ -45,7 +45,7 @@ struct ContentView: View {
                     }
                 case .profile:
                     NavigationStack {
-                        ProfileView()
+                        ProfileView(selectedTab: $selectedTab)
                     }
                 }
                 CustomTabView(selectedTab: $selectedTab,
